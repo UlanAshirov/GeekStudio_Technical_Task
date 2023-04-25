@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ripple_effect"
+    android:padding="16dp">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/item_episode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="4dp"
+        android:text="@{episode.episode}"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="S01E01" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/item_name_episode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@{episode.name}"
+        android:textColor="#6E798C"
+        app:layout_constraintStart_toStartOf="@+id/item_episode"
+        app:layout_constraintTop_toBottomOf="@+id/item_episode"
+        tools:text="Pilot" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/item_episode_create"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@{episode.air_date}"
+        app:layout_constraintStart_toStartOf="@+id/item_name_episode"
+        app:layout_constraintTop_toBottomOf="@+id/item_name_episode"
+        tools:text="December 2, 2013" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

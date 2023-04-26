@@ -4,38 +4,44 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.core.view.MenuProvider
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.core.base.BaseFragment
+import com.example.core.ext.gone
+import com.example.core.ext.visible
 import com.example.main.R
 import com.example.main.databinding.FragmentPagerBinding
 import com.example.main.presentation.ui.adapters.PagerAdapter
 import com.example.main.presentation.ui.fragments.search.SearchFragment
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PagerFragment :
     BaseFragment<FragmentPagerBinding, NetworkStateViewModel>(R.layout.fragment_pager) {
     override val binding: FragmentPagerBinding by viewBinding(FragmentPagerBinding::bind)
     override val viewModel: NetworkStateViewModel by viewModel()
-
     override fun initialize() {
         initNetworkState()
+        initMenuOptions()
     }
 
     private fun initNetworkState() {
-        if (viewModel.networkState(requireContext())) {
-            binding.pager.isVisible = true
-            binding.pagerTab.isVisible = true
-            binding.checkInternet.root.isGone = true
-            initMenuOptions()
-            initPagerTabs()
-        } else {
-            binding.checkInternet.root.isVisible = true
-            binding.pager.isGone = true
-            binding.pagerTab.isGone = true
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.isConnected.collectLatest { isConnectivity ->
+                if (isConnectivity) {
+                    initPagerTabs()
+                    binding.checkInternet.root.gone()
+                    binding.pagerTab.visible()
+                    binding.pager.visible()
+                } else {
+                    binding.checkInternet.root.visible()
+                    binding.pagerTab.gone()
+                    binding.pager.gone()
+                }
+            }
         }
     }
 

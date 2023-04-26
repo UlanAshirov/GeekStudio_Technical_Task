@@ -1,12 +1,10 @@
 package com.example.main.presentation.ui.fragments.pager
 
-import android.content.Context
 import com.example.core.base.BaseViewModel
 import com.example.main.presentation.utils.NetworkUtils
+import kotlinx.coroutines.flow.Flow
 
-class NetworkStateViewModel : BaseViewModel() {
+class NetworkStateViewModel(listenNetwork: NetworkUtils) : BaseViewModel() {
 
-    fun networkState(context: Context): Boolean {
-        return NetworkUtils.isInternetAvailable(context)
-    }
+    val isConnected: Flow<Boolean> = listenNetwork.isConnected
 }

@@ -11,5 +11,5 @@ val viewModelModule = module {
     viewModel { CharactersViewModel(get()) }
     viewModel { EpisodeViewModel(get()) }
     viewModel { LocationViewModel(get()) }
-    viewModel { NetworkStateViewModel() }
+    viewModel { NetworkStateViewModel(get()) }
 }
